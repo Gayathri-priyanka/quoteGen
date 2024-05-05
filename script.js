@@ -3,6 +3,7 @@ const quoteText=document.getElementById('quote');
 const authorText=document.getElementById('author');
 const twitterBtn=document.getElementById('twitter');
 const newQuoteBtn=document.getElementById('new-quote');
+const copyBtn=document.getElementById('copy');
 const loader=document.getElementById('loader');
 let apiQuotes=[];
 
@@ -51,6 +52,19 @@ async function getQuotes(){
         //catch error here
     }
 }
+function copyContent(){
+    let text=document.getElementById('quote').innerHTML;
+    const content=async()=>{
+        try{
+            await navigator.clipboard.writeText(text);
+            console.log('Content copied to clipboard');
+        }
+        catch(error){
+            console.log('Failed to copy',error);
+        }
+    }
+    content();
+}
 //tweet quote
 function tweetQuote(){
     const twitterUrl=`https://twitter.com/intent/tweet?text=${quoteText.textContent} - ${authorText.textContent}`;
@@ -59,5 +73,6 @@ function tweetQuote(){
 //Event Listeners
 newQuoteBtn.addEventListener('click', newQuote);
 twitterBtn.addEventListener('click',tweetQuote);
+copyBtn.addEventListener('click',copyContent);
 //onload 
 getQuotes();
